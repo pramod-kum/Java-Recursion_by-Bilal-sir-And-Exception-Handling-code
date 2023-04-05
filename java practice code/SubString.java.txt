@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    public static boolean fun(String st){
+        
+        if(st.length()==1){
+            return false;
+        }
+        for(int i=2;i*1<=st.length()/2;i++){
+            if(st.length()%i==0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+      
+      String str="Aman";
+        
+        for(int i=0;i<str.length();i++){
+            for(int j=i;j<str.length();j++){
+                
+                String st="";
+                for(int k=i;k<=j;k++){
+                    st+=str.charAt(k);
+                }
+                
+                if(fun(st)){
+                    System.out.println(st);
+                }
+            }
+        }
+        
+   }
+    
+}

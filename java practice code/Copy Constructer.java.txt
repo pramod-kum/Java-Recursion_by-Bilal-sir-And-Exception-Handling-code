@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+public class Name {
+    String n;
+     Name(String n){
+         this.n=n;
+        System.out.println(this.n);
+    }
+    Name(Name n1){
+        n=n1.n;
+        System.out.println(n);
+    }
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+    // Scanner sc=new Scanner(System.in);
+        Name obj1=new Name("Pramod");
+        Name obj2=new Name(obj1);
+     
+}
+}

@@ -1,0 +1,154 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Stack<Character> undo = new Stack<>();
+    static Stack<Character> redo = new Stack<>();
+    static boolean flagCopy = false;
+    static String copyData = "";
+    
+    public static void writeOperation(char x){
+        undo.push(x);
+    }
+    
+    public static void undoOperation(){
+        if(undo.size() == 0){
+            System.out.println("You can't perform undo operation");
+            return;
+        }
+        redo.push(undo.pop());
+    }
+    
+    public static void redoOperation(){
+        if(redo.size() == 0){
+            System.out.println("You can't perform redo operation");
+            return;
+        }
+        undo.push(redo.pop());
+    }
+    
+    public static void readOperation(){
+        Stack<Character> read = new Stack<>();
+        while(undo.size()>0){
+            read.push(undo.pop());
+        }
+        System.out.println("Read Operation starts: ");
+        
+        while(read.size()>0){
+            System.out.print(read.peek()+" ");
+            undo.push(read.pop());
+            
+        }
+        System.out.println();
+        
+        System.out.println("Read operation completed");
+        
+    }
+    
+    public static String copyOpertaion(char length){
+        int len = length -'0';
+        if(undo.size()<len){
+            System.out.println("You can't copy that much length");
+            return "";
+        }
+        
+        String copy = "";
+        Stack<Character>copyStack = new Stack<>();
+        
+        while(len > 0){
+            copyStack.push(undo.pop());
+            len--;
+        }
+        
+        while(copyStack.size()>0){
+            copy+=copyStack.peek();
+            undo.push(copyStack.pop());
+        }
+        flagCopy = true;
+        copyData = copy;
+        System.out.println("Copy data: "+copy);
+        return copy;
+        
+        
+    }
+    
+    public static String cutOpertaion(char length){
+        int len = length -'0';
+        if(undo.size()<len){
+            System.out.println("You can't cut that much length");
+            return "";
+        }
+        
+        String cut = "";
+        Stack<Character>cutStack = new Stack<>();
+        
+        while(len > 0){
+            cutStack.push(undo.pop());
+            len--;
+        }
+        
+        while(cutStack.size()>0){
+            cut+=cutStack.pop();
+        }
+        
+        System.out.println("Cut data: "+cut);
+        return cut;
+        
+        
+    }
+    
+    public static void pasteOpertaion(){
+        if(flagCopy == false){
+            System.out.println("You can't paste anything");
+            return ;
+        }
+        
+        for (int i=0;i<copyData.length();i++){
+            char c = copyData.charAt(i);
+            undo.push(c);
+        }
+    }
+   
+    public static void callFunction(String data){
+       if (data.equals("READ")){
+           readOperation();
+
+       }
+       else if(data.equals("UNDO")){
+           undoOperation();
+
+       }else if(data.equals("REDO")){
+           redoOperation();
+
+       }else if (data.length() > 5 && data.substring(0,5).equals("WRITE")){
+           
+           writeOperation(data.charAt(5));
+
+       }
+        // else if(data.equals("PASTE")){
+       //     pasteOpertaion();
+       // }else if(data.length() > 4 && data.substring(0,4).equals("COPY")){
+       //     copyOpertaion(data.charAt(4));
+       // }else if(data.length()>3 && data.substring(0,3).equals("CUT")){
+       //     cutOpertaion(data.charAt(3));
+       // }
+       else {
+           System.out.println("Invalid Operation");
+       }
+    }
+
+    public static void main(String [] args){
+        Scanner scn = new Scanner(System.in);
+        
+        while(true){
+            String operation = scn.next();
+            if( operation.equals("false")){
+                break;
+            }else{
+                callFunction(operation);
+            }
+        }
+        
+    }
+
+}

@@ -1,0 +1,31 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+   public static int fact(int x,int n){
+       if(n==0){
+           return 1;
+       }
+       int ans=fact(x,n/2);
+       
+       if(n%2==0){
+           return ans*ans;
+       }else{
+          return ans*ans*x;
+       }
+             
+   }
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+    // Scanner sc=new Scanner(System.in);
+     int n1=2,n2=5;
+   
+       
+        
+        int ans=fact(n1,n2);
+        
+        System.out.print(ans);
+}
+}

@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+ 
+
+    public static void main(String[] args) {
+      
+        int arr[]={6,8,4,3,5,1,8};
+       int min=Integer.MIN_VALUE;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>min){
+                min=arr[i];
+            }
+        }
+        // System.out.print(min);
+        int ans[][]=new int[min][arr.length];
+        int row=0,col=0;
+        for(int i=0;i<arr.length;i++){
+            int val=arr[i];
+            
+            for(int j=1;j<=min-val;j++){
+                 row++;
+            }
+            for(int j=1;j<=val;j++){
+                 ans[row][col]=1;
+                row++;
+            }
+            col++;
+            row=0;
+        }
+        
+        
+        for(int i=0;i<ans.length;i++){
+            for(int j=0;j<ans[0].length;j++){
+                if(ans[i][j]==1){
+                    System.out.print("* ");
+                }else{
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+   }
+    
+}
